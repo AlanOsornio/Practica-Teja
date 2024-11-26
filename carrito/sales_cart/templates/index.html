@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <div class="header">
+        <a href="/">Pec Shoc - Tienda de Videojuegos</a>
+    </div>
+
+    <!-- Título de la sección de productos -->
+    <h1>Productos</h1>
+
+    <!-- Contenedor de productos -->
+    <div class="products-container">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product[3] }}" alt="{{ product[1] }}"> <!-- Imagen del producto -->
+            <h3>{{ product[1] }}</h3> <!-- Nombre del producto -->
+            <p>${{ product[2] }}</p> <!-- Precio del producto -->
+            <form action="{{ url_for('add_to_cart', product_id=product[0]) }}" method="post">
+                <input type="number" name="quantity" value="1" min="1">
+                <button type="submit">Añadir al carrito</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
