@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <div class="header">
+        <a href="/">Pec Shoc - Carro de Compras</a>
+    </div>
+
+    <!-- Título del carrito -->
+    <h1>Carrito de Compras</h1>
+    
+    <!-- Lista de artículos en el carrito -->
+    <ul>
+        {% for item in cart_items %}
+        <li>
+            <h2>{{ item[0] }}</h2>  <!-- Nombre del producto -->
+            <p>Precio: ${{ item[1] }}</p>
+            <p>Cantidad: {{ item[2] }}</p>
+            <p>Total: ${{ item[1] * item[2] }}</p>  <!-- Precio por cantidad -->
+            <form action="{{ url_for('remove_from_cart', item_id=item[3]) }}" method="post">
+                <button type="submit">Eliminar</button> <!-- Botón para eliminar del carrito -->
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Total -->
+    <h2>Total: ${{ total }}</h2>
+
+    <!-- Botón de checkout -->
+    <form action="{{ url_for('checkout') }}" method="post">
+        <button type="submit">Proceder al Pago</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pedido</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <div class="header">
+        <a href="/">Pec Shoc - Tienda de Videojuegos</a>
+    </div>
+
+    <!-- Confirmación de pedido -->
+    <div class="order-confirmation">
+        <h1>¡Pedido Confirmado!</h1>
+        <p>Gracias por tu compra, tu pedido ha sido procesado exitosamente.</p>
+        <p>Pedido ID: <strong>{{ order[0] }}</strong></p>
+        <p>Total a pagar: <strong>${{ order[1] }}</strong></p>
+        <a href="/" style="text-decoration: none;">
+            <button>Volver a la tienda</button>
+        </a>
+    </div>
+
+</body>
+</html>
