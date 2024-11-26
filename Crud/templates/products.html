@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #4CAF50;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .add-product {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .add-product:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #ddd;
+        }
+        button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e53935;
+        }
+        .actions a {
+            margin-right: 10px;
+            color: #2196F3;
+            font-weight: bold;
+        }
+        .actions a:hover {
+            color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Productos</h1>
+        
+        <a href="{{ url_for('add_product') }}" class="add-product">Agregar nuevo producto</a>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('edit_product', id=product.id) }}">Editar</a>
+                    <form action="{{ url_for('delete_product', id=product.id) }}" method="POST" style="display:inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
