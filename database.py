@@ -2,7 +2,7 @@ from flask import flash
 import pymysql
 
 class Database:
-    def __init__(self, host="localhost", user="root", password="", database="registroautos"):
+    def _init_(self, host="localhost", user="root", password="", database="registroautos"):
         self.connection = pymysql.connect(
             host=host,
             user=user,
@@ -77,3 +77,40 @@ class Database:
         query = "INSERT INTO horas_no_disponibles (fecha, hora) VALUES (%s, %s)"
         self.cursor.execute(query, (fecha, hora))
         self.connection.commit()
+        
+        
+class Database:
+    def _init_(self, host="localhost", user="root", password="", database="registroautos"):
+        self.connection = pymysql.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
+        self.cursor = self.connection.cursor()
+
+    # Otros métodos...
+
+    def editar_cita(self, placa, serie, modelo, correo_electronico, fecha_cita, hora_cita, id_cita):
+        try:
+            query = """
+                UPDATE registros
+                SET Placa = %s, Serie = %s, Modelo = %s, Correo_Electronico = %s, Fecha_Cita = %s, Hora_Cita = %s
+                WHERE id = %s
+            """
+            self.cursor.execute(query, (placa, serie, modelo, correo_electronico, fecha_cita, hora_cita, id_cita))
+            self.connection.commit()
+            flash("Cita actualizada correctamente", "success")
+        except Exception as e:
+            print(f"Error al editar cita: {e}")
+            flash("Error al editar la cita", "error")
+
+    def eliminar_cita(self, id_cita):
+        try:
+            query = "DELETE FROM registros WHERE id = %s"
+            self.cursor.execute(query, (id_cita,))
+            self.connection.commit()
+            flash("Cita eliminada correctamente", "success")
+        except Exception as e:
+            print(f"Error al eliminar cita: {e}")
+            flash("Error al eliminar la cita", "error")
